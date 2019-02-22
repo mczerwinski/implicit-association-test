@@ -24,20 +24,23 @@ list_of_numbers = []
 for i in list_of_files:
     nb = int(i[len(result_name):-4])
     list_of_numbers.append(nb)
-if len(list_of_numbers)==0:
-    new_file_number = 1
-else:
-    new_file_number = np.max(list_of_numbers)+1
-info = {'ID':[new_file_number]}
+#if len(list_of_numbers)==0:
+#    new_file_number = 1
+#else:
+#    new_file_number = np.max(list_of_numbers)+1
+#info = {'ID':[new_file_number]}
 os.chdir(maindir)
 
 # get user data before setup, since Dlg does not work in fullscreen
 # can be used to ask for any input that is needed
-#title = 'SIP IAT'
+title = 'IAT window'
 #questions = {'ID': '', 'Condition': ['A', 'B']}
-#questions = {'ID': ''}
-#info = helpers.getInput(title, questions) or core.quit()
-
+questions = {'ID': ''}
+info = helpers.getInput(title, questions) or core.quit()
+#info['number'] = new_file_number
+if int(info['ID']) in list_of_numbers:
+    print(u"Podany numer ", info['ID'], u'już występuje')
+    raise SystemExit
 
 # create all the basic objects (window, fixation-cross, feedback)
 win = visual.Window(units='norm', color='black', fullscr=True)
@@ -48,7 +51,7 @@ win.setMouseVisible(False)
 # partially apply the helper functions to suite our needs
 draw = functools.partial(helpers.draw, win)
 show = functools.partial(helpers.showInstruction, win)
-wrapdim = functools.partial(helpers.wrapdim, win, height=0.08, color='blue')
+wrapdim = functools.partial(helpers.wrapdim, win, height=0.08)
 
 # Response Mappings
 # you can change the keybindings and allRes to fit your IAT constraints
@@ -209,12 +212,21 @@ instructions = {
 LEWO                                          PRAWO
         Teraz przyzwyczaisz się do zadania. Na pojawiające się słow 'lewo' naciśnij klawisz 'e', na pojawiające się słowo 'prawo' naciśnij jak najszybciej klawisz 'i'. ''',
         2: u'''
-{0}                                          {1}
+{0}                                                                 {1}
+
+
+
+
 
 tutaj jest instrukcja'''.format(A[0], A[1]),
 
         3: u'''
-{0}                                          {1}
+{0}                                                                                    {1}
+
+
+
+
+
 
 tutaj jest instrukcja'''.format(A[1], A[0]),
         4: u'''
@@ -226,8 +238,12 @@ tutaj jest instrukcja'''.format(B[0], B[1]),
 
 tutaj jest instrukcja'''.format(B[1], B[0]),
         6: u'''
-{0}                                          {1}
-{2}                                          {3}
+{0}                                                                 {1}
+{2}                                                                 {3}
+
+
+
+
 
 tutaj jest instrukcja'''.format(A[0], A[1], B[0], B[1]),
         7: u'''
@@ -241,7 +257,7 @@ def main():
     # Instruction Setup
     header = ['number of stimulation', 'Content', 'corrAns', 'RT', 'trialName']
 
-    show(text=mainInstruction, height=0.07, wrapWidth=1.5, font='Arial')
+    show(text=mainInstruction, height=0.06, wrapWidth=1.6, font='Arial')
 
     # order in which the data are analyzed
 
@@ -251,7 +267,7 @@ def main():
 
     trialType = random.randint(0, 1) #1
     order = order1 if trialType else order2
-    #order = [2]
+    order = [2, 6]
 
     # order the blocks and instruction according to the trialType
     blockOrder = [allBlocks[num] for num in order]
@@ -265,7 +281,7 @@ def main():
     experimentData.extend(data)
 
     os.chdir(wyniki)
-    file = result_name+ str(new_file_number)+'.csv' # {0}.csv'.format(info['ID'])
+    file = result_name+ str(info['ID'])+'.csv' # {0}.csv'.format(info['ID'])
     helpers.saveData(file, experimentData)
     show(text=endInstruction, font='Arial', wrapWidth=1.5)
     win.close()
