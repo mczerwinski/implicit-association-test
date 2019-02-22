@@ -192,7 +192,7 @@ def runExperiment(pause, instructionOrder, blockOrder):
         elif isImage(instr):
             pause(image=instr)
         else:
-            pause(text=instr)
+            pause(text=instr, font='Arial', wrapWidth=1.5)
 
         #current = block(trials=40) if trialCount == 5 else block()
         # for some reason it changed nb of trials to 40 if the nb of the block > 5

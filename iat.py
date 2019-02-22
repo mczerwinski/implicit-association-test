@@ -4,7 +4,7 @@ from __future__ import unicode_literals
 import csv
 import random
 import functools
-import helpers2 as helpers
+import helpers as helpers
 import psychopy.visual
 from psychopy import visual, event, core, gui
 from copy import deepcopy as cp
@@ -63,7 +63,7 @@ directions = [(-0.8, +0.8), (+0.8, +0.8), (-0.8, +0.7), (+0.8, +0.7)]
 experimentData = []
 timer = core.Clock()
 # you can easily change the stimuli by changing the csv
-stimuli = helpers.getStimuli('stimuli_filler.csv')
+stimuli = helpers.getStimuli('stimuli.csv')
 
 ISI = 0.150
 TIMEOUT = 1.5
@@ -83,7 +83,7 @@ def block(anchors, responseMap, selection, trialName, trials=20):
         helpers.autodraw(anchors, draw=True)
         onTime = True
         content = stimulus['content']
-        if content[-4:] in ['.jpg', '.png']:
+        if helpers.isImage(content): #[-4:] in ['.jpg', '.png']:
             if content[0] == '/':
                 proper_content = '.'+content
             else:
@@ -115,7 +115,8 @@ def block(anchors, responseMap, selection, trialName, trials=20):
             draw(negFeedback, feedbackTime)
             draw(curStim)
             event.waitKeys(keyList=[rightAnswer])
-        data.append([ISI, content, int(onTime), RT, trialName])
+        #data.append([ISI, content, int(onTime), RT, trialName])
+        data.append([stimulus['item'], content, int(onTime), RT, trialName])
         draw(fixCross, ISI)
 
     return data
@@ -193,12 +194,12 @@ endInstruction = u'''Dziękujemy za badanie'''
 
 instructions = {
         1: u'''Teraz przyzwyczaisz się do zadania. Na pojawiające się słow 'lewo' naciśnij klawisz 'e', na pojawiające się słowo 'prawo' naciśnij jak najszybciej klawisz 'i'. ''',
-        2: u'''testowa instrukcja''',
-        3: u'''testowa instrukcja''',
-        4: u'''testowa instrukcja''',
-        5: u'''testowa instrukcja''',
-        6: u'''testowa instrukcja''',
-        7: u'''testowa instrukcja'''}
+        2: u'''testową instrukcja''',
+        3: u'''testową instrukcja''',
+        4: u'''testową instrukcja''',
+        5: u'''testową instrukcja''',
+        6: u'''testową instrukcja''',
+        7: u'''testową instrukcja'''}
 
 def main():
     # Instruction Setup
@@ -212,9 +213,9 @@ def main():
     # trialType = random.randint(0, 1) #1
     # order = [1, 2, 3, 5, 6,7] if trialType else [5, 2, 6, 1, 3]
 
-    order = [1,2,4,6]
-    #order = [1,2,3,4,5,6,7]
-
+#    order = [1,2,4,6]
+    order = [1,2,3,4,5,6,7]
+    order = [2,3]
     # order the blocks and instruction according to the trialType
     blockOrder = [allBlocks[num] for num in order]
     instructionOrder = [instructions[num] for num in order] # maybe instructions can be text, not images? it probably is implemented
@@ -229,7 +230,7 @@ def main():
     os.chdir(wyniki)
     file = result_name+ str(new_file_number)+'.csv' # {0}.csv'.format(info['ID'])
     helpers.saveData(file, experimentData)
-    show(text=endInstruction, font='Arial')
+    show(text=endInstruction, font='Arial', wrapWidth=1.5)
     win.close()
     core.quit()
     os.chdir(maindir)
