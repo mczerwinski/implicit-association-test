@@ -16,6 +16,8 @@ maindir = os.getcwd()
 wyniki = './wyniki'
 
 result_name = "experiment_paraolympics_"
+
+# this part is to create a new name for the results
 os.chdir(wyniki)
 list_of_files = glob.glob(result_name+'*')
 list_of_numbers = []
@@ -46,12 +48,13 @@ win.setMouseVisible(False)
 # partially apply the helper functions to suite our needs
 draw = functools.partial(helpers.draw, win)
 show = functools.partial(helpers.showInstruction, win)
-wrapdim = functools.partial(helpers.wrapdim, win, height=0.08)
+wrapdim = functools.partial(helpers.wrapdim, win, height=0.08, color='blue')
 
 # Response Mappings
 # you can change the keybindings and allRes to fit your IAT constraints
 keybindings = ['e', 'i']
-A, B = ['dobre', 'zle'], ['paraolimpiada', 'olimpiada']
+A = ['dobre', 'zle']
+B = ['paraolimpiada', 'olimpiada']
 TEST_category = ['lewo', 'prawo']
 allRes = A+B
 allMappings = helpers.getResponseMappings(allRes, keybindings=keybindings)
@@ -72,13 +75,15 @@ feedbackTime = 1
 def block(anchors, responseMap, selection, trialName, trials=20):
     data = []
     helpers.autodraw(anchors)
-
-    filteredStim = helpers.filterStimuli(stimuli, 'response', *selection)
-    extendedStim = helpers.compensate(filteredStim, trials)
+    #print('test1')
+    filteredStim = helpers.filterStimuli(stimuli, 'response', *selection) #this is ok
+    extendedStim = helpers.compensate(filteredStim, trials) # this is ok
+    #print('test2')
 
     randomStim = sorted(extendedStim, key=lambda x: random.random())[:trials]
-    preparedStim = helpers.deneigh(randomStim)
-
+    #preparedStim = helpers.deneigh(randomStim)
+    preparedStim = randomStim
+    #print('test3')
     for stimulus in preparedStim:
         helpers.autodraw(anchors, draw=True)
         onTime = True
@@ -113,12 +118,19 @@ def block(anchors, responseMap, selection, trialName, trials=20):
             RT = timer.getTime()
             onTime = False
             draw(negFeedback, feedbackTime)
+            anchors[0].draw()
+            anchors[1].draw()
+            if len(anchors)>2:
+                anchors[2].draw()
+                anchors[3].draw()
             draw(curStim)
+
             event.waitKeys(keyList=[rightAnswer])
+
         #data.append([ISI, content, int(onTime), RT, trialName])
         data.append([stimulus['item'], content, int(onTime), RT, trialName])
         draw(fixCross, ISI)
-
+    print('test5')
     return data
 
 
@@ -177,7 +189,7 @@ allBlocks = {
     4: wrapping(B, keybindings, directions, False, False, False, ntrials),
     5: wrapping(B, keybindings, directions, True, False, False, ntrials),
     6: wrapping(A, keybindings, directions, False, B, False, ntrials),
-    7: wrapping(A, keybindings, directions, False, B, False, ntrials),
+    7: wrapping(A, keybindings, directions, False, B, True, ntrials),
     }
 
 mainInstruction = u'''
@@ -193,29 +205,54 @@ mainInstruction = u'''
 endInstruction = u'''Dziękujemy za badanie'''
 
 instructions = {
-        1: u'''Teraz przyzwyczaisz się do zadania. Na pojawiające się słow 'lewo' naciśnij klawisz 'e', na pojawiające się słowo 'prawo' naciśnij jak najszybciej klawisz 'i'. ''',
-        2: u'''testową instrukcja''',
-        3: u'''testową instrukcja''',
-        4: u'''testową instrukcja''',
-        5: u'''testową instrukcja''',
-        6: u'''testową instrukcja''',
-        7: u'''testową instrukcja'''}
+        1: u'''
+LEWO                                          PRAWO
+        Teraz przyzwyczaisz się do zadania. Na pojawiające się słow 'lewo' naciśnij klawisz 'e', na pojawiające się słowo 'prawo' naciśnij jak najszybciej klawisz 'i'. ''',
+        2: u'''
+{0}                                          {1}
+
+tutaj jest instrukcja'''.format(A[0], A[1]),
+
+        3: u'''
+{0}                                          {1}
+
+tutaj jest instrukcja'''.format(A[1], A[0]),
+        4: u'''
+{0}                                          {1}
+
+tutaj jest instrukcja'''.format(B[0], B[1]),
+        5: u'''
+{0}                                          {1}
+
+tutaj jest instrukcja'''.format(B[1], B[0]),
+        6: u'''
+{0}                                          {1}
+{2}                                          {3}
+
+tutaj jest instrukcja'''.format(A[0], A[1], B[0], B[1]),
+        7: u'''
+{0}                                          {1}
+{2}                                          {3}
+
+tutaj jest instrukcja'''.format(A[0], A[1], B[1], B[0])
+}
 
 def main():
     # Instruction Setup
-    header = ['ISI', 'Content', 'corrAns', 'RT', 'trialName']
+    header = ['number of stimulation', 'Content', 'corrAns', 'RT', 'trialName']
 
     show(text=mainInstruction, height=0.07, wrapWidth=1.5, font='Arial')
 
     # order in which the data are analyzed
 
     # this can be made to randomly choose between two (or more) order types
-    # trialType = random.randint(0, 1) #1
-    # order = [1, 2, 3, 5, 6,7] if trialType else [5, 2, 6, 1, 3]
+    order1 = [1, 2, 5, 6, 7, 4, 3]
+    order2 = [1, 3, 4, 7, 6, 5, 2]
 
-#    order = [1,2,4,6]
-    order = [1,2,3,4,5,6,7]
-    order = [2,3]
+    trialType = random.randint(0, 1) #1
+    order = order1 if trialType else order2
+    #order = [2]
+
     # order the blocks and instruction according to the trialType
     blockOrder = [allBlocks[num] for num in order]
     instructionOrder = [instructions[num] for num in order] # maybe instructions can be text, not images? it probably is implemented
@@ -235,3 +272,4 @@ def main():
     core.quit()
     os.chdir(maindir)
 main()
+os.chdir(maindir)
