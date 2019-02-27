@@ -56,7 +56,7 @@ wrapdim = functools.partial(helpers.wrapdim, win, height=0.08)
 # Response Mappings
 # you can change the keybindings and allRes to fit your IAT constraints
 keybindings = ['e', 'i']
-A = ['dobre', 'zle']
+A = ['pozytywne', 'negatywne']
 B = ['paraolimpiada', 'olimpiada']
 TEST_category = ['lewo', 'prawo']
 allRes = A+B
@@ -193,6 +193,7 @@ allBlocks = {
     5: wrapping(B, keybindings, directions, True, False, False, ntrials),
     6: wrapping(A, keybindings, directions, False, B, False, ntrials),
     7: wrapping(A, keybindings, directions, False, B, True, ntrials),
+    8: wrapping(A, keybindings, directions, True, B, False, ntrials),
     }
 
 mainInstruction = u'''
@@ -205,7 +206,8 @@ mainInstruction = u'''
     Aby uzyskać lepszy rezultat, unikając zakłóceń podczas wykonywania testu, ustaw, proszę, w monitorze maksymalną jasność.
 '''
 
-endInstruction = u'''Dziękujemy za badanie'''
+endInstruction = u'''Dziękujemy za badanie
+'''
 
 instructions = {
         1: u'''
@@ -250,7 +252,12 @@ tutaj jest instrukcja'''.format(A[0], A[1], B[0], B[1]),
 {0}                                          {1}
 {2}                                          {3}
 
-tutaj jest instrukcja'''.format(A[0], A[1], B[1], B[0])
+tutaj jest instrukcja'''.format(A[0], A[1], B[1], B[0]),
+        8: u'''
+{0}                                          {1}
+{2}                                          {3}
+
+tutaj jest instrukcja'''.format(A[1], A[0], B[0], B[1])
 }
 
 def main():
@@ -262,12 +269,12 @@ def main():
     # order in which the data are analyzed
 
     # this can be made to randomly choose between two (or more) order types
-    order1 = [1, 2, 5, 6, 7, 4, 3]
-    order2 = [1, 3, 4, 7, 6, 5, 2]
+    order1 = [1, 2, 4, 7, 3, 5, 6, 1]#[1, 2, 5, 6, 7, 4, 3]
+    order2 = [1, 3, 5, 7, 2, 4, 8, 1]#[1, 3, 4, 7, 6, 5, 2]
 
     trialType = random.randint(0, 1) #1
     order = order1 if trialType else order2
-    order = [2, 6]
+    #order = [2, 6]
 
     # order the blocks and instruction according to the trialType
     blockOrder = [allBlocks[num] for num in order]
@@ -283,7 +290,7 @@ def main():
     os.chdir(wyniki)
     file = result_name+ str(info['ID'])+'.csv' # {0}.csv'.format(info['ID'])
     helpers.saveData(file, experimentData)
-    show(text=endInstruction, font='Arial', wrapWidth=1.5)
+    show(text=endInstruction+u'wersja testu: '+str(trialType), font='Arial', wrapWidth=1.5)
     win.close()
     core.quit()
     os.chdir(maindir)
