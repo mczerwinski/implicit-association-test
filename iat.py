@@ -183,7 +183,7 @@ def wrapping(category, buttons, directions, flipA=False, category2=False, flipB=
     blockthing = wrap(annotations, d_keys, category_list, cat_title, trials=ntrials)
     return blockthing
 
-ntrials = 3
+ntrials = 12
 
 allBlocks = {
     1: wrapping(TEST_category, keybindings, directions, False, False, False, ntrials),
@@ -195,6 +195,24 @@ allBlocks = {
     7: wrapping(A, keybindings, directions, False, B, True, ntrials),
     8: wrapping(A, keybindings, directions, True, B, False, ntrials),
     }
+
+def instrukcja_prosta(kat1, kat2):
+    text = u'''
+{0}                                                                                           {1}
+UWAGA – spójrz, teraz zmieniły się kategorie. Jeżeli dany bodziec należy do kategorii znajdującej się po lewej stronie , naciśnij klawisz  E. Jeżeli dany bodziec należy do kategorii należącej po prawej stronie naciśnij I. Każde słowo lub obrazek należy do jednej kategorii. Jeżeli popełnisz błąd przy porządkowaniu, na ekranie pojawi się czerwony  X – wtedy popraw błąd, naciskając  drugi klawisz
+Jest to zadanie na czas. Postaraj się wykonać je JAK NAJSZYBCIEJ POTRAFISZ, jednocześnie popełniając jak najmniej błędów. Zbyt wolne wykonanie zadania i popełnienie zbyt wielu błędów prowadzi do wyników, których nie można zinterpretować. Zadanie zajmuje około 5 minut
+ABY ROZPOCZĄĆ TEST WCIŚNIJ SPACJĘ'''.format(kat1, kat2) 
+    return text
+
+def instrukcja_zlozona(a1, a2, b1, b2):
+    tekst = u'''
+{0}                                                                                           {1}
++                                                                                             {4}+
+{2}                                                                                           {3}
+Spójrz na górę ekranu, kategorie, które wyświetlały się poprzednio, teraz znajdują się razem. Pamiętaj, że każdy bodziec należy tylko do jednej grupy. Przyporządkuj wyświetlające się słowa lub zdjęcia do prawych lub lewych grup, przy pomocy klawiszy E (prawa strona) lub I (lewa strona).
+Jeżeli popełnisz błąd przy porządkowaniu, na ekranie pojawi się czerwony  X – wtedy popraw błąd, naciskając  drugi klawisz
+ABY KONTYNUOWAĆ WCIŚNIJ SPACJĘ'''.format(a1, a2, b1, b2, len(a1)*" ")
+    return tekst
 
 mainInstruction = u'''
     Połóż palce wskazujące na klawisze 'e' oraz 'i', abyś był gotowy(a), do jak najszybszego udzielania odpowiedzi.
@@ -209,56 +227,22 @@ mainInstruction = u'''
 endInstruction = u'''Dziękujemy za badanie
 '''
 
+instrukcja_prawo_lewo = u'''
+LEWO                                                                                                                               PRAWO
+Połóż palce na klawiszach E oraz I. W tym zadaniu sprawdzany jest Twój czas reakcji. Naciśnij "E" - lewy klawisz, jeżeli pojawi się słowo LEWO. Naciśnij "i" - prawy klawisz jeżeli pojawi się słowo PRAWO. Jeżeli popełnisz błąd przy porządkowaniu, na ekranie pojawi się czerwony  X – wtedy popraw błąd, naciskając  drugi klawisz.
+Jest to zadanie na czas. Postaraj się wykonać je JAK NAJSZYBCIEJ POTRAFISZ, jednocześnie popełniając jak najmniej błędów.
+ABY ROZPOCZĄĆ TEST WCIŚNIJ SPACJĘ
+'''
+
 instructions = {
-        1: u'''
-LEWO                                          PRAWO
-        Teraz przyzwyczaisz się do zadania. Na pojawiające się słow 'lewo' naciśnij klawisz 'e', na pojawiające się słowo 'prawo' naciśnij jak najszybciej klawisz 'i'. ''',
-        2: u'''
-{0}                                                                 {1}
-
-
-
-
-
-tutaj jest instrukcja'''.format(A[0], A[1]),
-
-        3: u'''
-{0}                                                                                    {1}
-
-
-
-
-
-
-tutaj jest instrukcja'''.format(A[1], A[0]),
-        4: u'''
-{0}                                          {1}
-
-tutaj jest instrukcja'''.format(B[0], B[1]),
-        5: u'''
-{0}                                          {1}
-
-tutaj jest instrukcja'''.format(B[1], B[0]),
-        6: u'''
-{0}                                                                 {1}
-{2}                                                                 {3}
-
-
-
-
-
-tutaj jest instrukcja'''.format(A[0], A[1], B[0], B[1]),
-        7: u'''
-{0}                                          {1}
-{2}                                          {3}
-
-tutaj jest instrukcja'''.format(A[0], A[1], B[1], B[0]),
-        8: u'''
-{0}                                          {1}
-{2}                                          {3}
-
-tutaj jest instrukcja'''.format(A[1], A[0], B[0], B[1])
-}
+        1: instrukcja_prawo_lewo,
+        2: instrukcja_prosta(A[0], A[1]),  
+        3: instrukcja_prosta(A[1], A[0]),
+        4: instrukcja_prosta(B[0], B[1]),
+        5: instrukcja_prosta(B[1], B[0]),
+        6: instrukcja_zlozona(A[0], A[1], B[0], B[1]), 
+        7: instrukcja_zlozona(A[0], A[1], B[1], B[0]),
+        8: instrukcja_zlozona(A[1], A[0], B[0], B[1])
 
 def main():
     # Instruction Setup
