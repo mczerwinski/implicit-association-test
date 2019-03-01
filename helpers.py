@@ -84,7 +84,7 @@ def showInstruction(win, stopkeys=['space'], text=None, image=None, **kwargs):
     by providing a list as keyword argument, e.g.
     stopkeys=['escape', 'space', 'f'].'''
     if text:
-        instruction = visual.TextStim(win, text=text, **kwargs)
+        instruction = visual.TextStim(win, text=text, height=0.06, wrapWidth=1.6,  **kwargs)
     elif image:
         instruction = visual.ImageStim(win, image=image, **kwargs)
     else:
