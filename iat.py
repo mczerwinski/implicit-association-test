@@ -243,6 +243,7 @@ instructions = {
         6: instrukcja_zlozona(A[0], A[1], B[0], B[1]), 
         7: instrukcja_zlozona(A[0], A[1], B[1], B[0]),
         8: instrukcja_zlozona(A[1], A[0], B[0], B[1])
+    }
 
 def main():
     # Instruction Setup
