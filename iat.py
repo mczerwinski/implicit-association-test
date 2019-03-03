@@ -214,15 +214,15 @@ Jeżeli popełnisz błąd przy porządkowaniu, na ekranie pojawi się czerwony  
 ABY KONTYNUOWAĆ WCIŚNIJ SPACJĘ'''.format(a1, a2, b1, b2, len(a1)*" ")
     return tekst
 
-mainInstruction = u'''
-    Połóż palce wskazujące na klawisze 'e' oraz 'i', abyś był gotowy(a), do jak najszybszego udzielania odpowiedzi.
-    Słowa i obrazki grupuj za pomocą klawisza 'e' lub 'i' zgodnie z nazwami kategorii znajdującymi się u góry ekranu
-    Każde słowo lub obrazek można zaklasyfikować do jednej kategorii. Większość kategoryzacji nie powinna sprawiać problemu.
-    Klasyfikuj bodźce zgodnie z ich kategorią. Obrazki oraz zielone słowa należą do kategorii zaznaczonych na zielono. Analogicznie, słowa w kolorze białym powinny być przyporządkowane do białych kategorii.
-    Jeżeli zadanie wykonujesz zbyt wolno, wówczas program nie generuje wyniku. Proszę, postaraj się wykonywać test najszybciej, jak potrafisz.
-    Jeśli test wykonujesz szybko, mogą zdarzyć się przypadkowe błędy. Nie stanowi to jednak problemu.
-    Aby uzyskać lepszy rezultat, unikając zakłóceń podczas wykonywania testu, ustaw, proszę, w monitorze maksymalną jasność.
-'''
+#mainInstruction = u'''
+#    Połóż palce wskazujące na klawisze 'e' oraz 'i', abyś był gotowy(a), do jak najszybszego udzielania odpowiedzi.
+#    Słowa i obrazki grupuj za pomocą klawisza 'e' lub 'i' zgodnie z nazwami kategorii znajdującymi się u góry ekranu
+#    Każde słowo lub obrazek można zaklasyfikować do jednej kategorii. Większość kategoryzacji nie powinna sprawiać problemu.
+#    Klasyfikuj bodźce zgodnie z ich kategorią. Obrazki oraz zielone słowa należą do kategorii zaznaczonych na zielono. Analogicznie, słowa w kolorze białym powinny być przyporządkowane do białych kategorii.
+#    Jeżeli zadanie wykonujesz zbyt wolno, wówczas program nie generuje wyniku. Proszę, postaraj się wykonywać test najszybciej, jak potrafisz.
+#    Jeśli test wykonujesz szybko, mogą zdarzyć się przypadkowe błędy. Nie stanowi to jednak problemu.
+#    Aby uzyskać lepszy rezultat, unikając zakłóceń podczas wykonywania testu, ustaw, proszę, w monitorze maksymalną jasność.
+#'''
 
 endInstruction = u'''Dziękujemy za badanie
 '''
@@ -234,17 +234,27 @@ Jest to zadanie na czas. Postaraj się wykonać je JAK NAJSZYBCIEJ POTRAFISZ, je
 ABY ROZPOCZĄĆ TEST WCIŚNIJ SPACJĘ
 '''
 
+#instructions = {
+#        1: instrukcja_prawo_lewo,
+#        2: instrukcja_prosta(A[0], A[1]),  
+#        3: instrukcja_prosta(A[1], A[0]),
+#        4: instrukcja_prosta(B[0], B[1]),
+#        5: instrukcja_prosta(B[1], B[0]),
+#        6: instrukcja_zlozona(A[0], A[1], B[0], B[1]), 
+#        7: instrukcja_zlozona(A[0], A[1], B[1], B[0]),
+#        8: instrukcja_zlozona(A[1], A[0], B[0], B[1])
+#    }
+mainInstruction = 'instrukcje/instrukcja_glowna.png'
 instructions = {
-        1: instrukcja_prawo_lewo,
-        2: instrukcja_prosta(A[0], A[1]),  
-        3: instrukcja_prosta(A[1], A[0]),
-        4: instrukcja_prosta(B[0], B[1]),
-        5: instrukcja_prosta(B[1], B[0]),
-        6: instrukcja_zlozona(A[0], A[1], B[0], B[1]), 
-        7: instrukcja_zlozona(A[0], A[1], B[1], B[0]),
-        8: instrukcja_zlozona(A[1], A[0], B[0], B[1])
+        1: 'instrukcje/instrukcja1.png',
+        2: 'instrukcje/instrukcja2.png',  
+        3: 'instrukcje/instrukcja3.png',
+        4: 'instrukcje/instrukcja4.png',
+        5: 'instrukcje/instrukcja5.png',
+        6: 'instrukcje/instrukcja6.png', 
+        7: 'instrukcje/instrukcja7.png',
+        8: 'instrukcje/instrukcja8.png'
     }
-
 def main():
     # Instruction Setup
     header = ['number of stimulation', 'Content', 'corrAns', 'RT', 'trialName']
