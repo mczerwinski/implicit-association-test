@@ -244,7 +244,7 @@ ABY ROZPOCZĄĆ TEST WCIŚNIJ SPACJĘ
 #        7: instrukcja_zlozona(A[0], A[1], B[1], B[0]),
 #        8: instrukcja_zlozona(A[1], A[0], B[0], B[1])
 #    }
-mainInstruction = 'instrukcje/instrukcja_glowna.png'
+mainInstruction = '/instrukcje/instrukcja_glowna.png'
 instructions = {
         1: '/instrukcje/instrukcja1.png',
         2: '/instrukcje/instrukcja2.png',  
