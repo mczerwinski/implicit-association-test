@@ -246,14 +246,14 @@ ABY ROZPOCZĄĆ TEST WCIŚNIJ SPACJĘ
 #    }
 mainInstruction = 'instrukcje/instrukcja_glowna.png'
 instructions = {
-        1: 'instrukcje/instrukcja1.png',
-        2: 'instrukcje/instrukcja2.png',  
-        3: 'instrukcje/instrukcja3.png',
-        4: 'instrukcje/instrukcja4.png',
-        5: 'instrukcje/instrukcja5.png',
-        6: 'instrukcje/instrukcja6.png', 
-        7: 'instrukcje/instrukcja7.png',
-        8: 'instrukcje/instrukcja8.png'
+        1: '/instrukcje/instrukcja1.png',
+        2: '/instrukcje/instrukcja2.png',  
+        3: '/instrukcje/instrukcja3.png',
+        4: '/instrukcje/instrukcja4.png',
+        5: '/instrukcje/instrukcja5.png',
+        6: '/instrukcje/instrukcja6.png', 
+        7: '/instrukcje/instrukcja7.png',
+        8: '/instrukcje/instrukcja8.png'
     }
 def main():
     # Instruction Setup
