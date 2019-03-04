@@ -246,14 +246,14 @@ ABY ROZPOCZĄĆ TEST WCIŚNIJ SPACJĘ
 #    }
 mainInstruction = '/instrukcje/instrukcja_glowna.png'
 instructions = {
-        1: '/instrukcje/instrukcja1.png',
-        2: '/instrukcje/instrukcja2.png',  
-        3: '/instrukcje/instrukcja3.png',
-        4: '/instrukcje/instrukcja4.png',
-        5: '/instrukcje/instrukcja5.png',
-        6: '/instrukcje/instrukcja6.png', 
-        7: '/instrukcje/instrukcja7.png',
-        8: '/instrukcje/instrukcja8.png'
+        1: '/instrukcje/lewo_prawo.png',  # powinno byc lewo_prawo.png
+        2: '/instrukcje/pozytywne_negatywne.png',
+        3: '/instrukcje/negatywne_pozytywne.png',  
+        4: '/instrukcje/paraolimpiada_olimpiada.png',
+        5: '/instrukcje/olimpiada_paraolimpiada.png',
+        6: '/instrukcje/paraolmpiada_pozytywne_olimpiada_negatywne.png',
+        7: '/instrukcje/olimpiada_pozytywne_paraolimpiada_negatywne.png', 
+        8: '/instrukcje/paraolimpiada_negatywne_olimpiada_pozytywne.png'
     }
 def main():
     # Instruction Setup
