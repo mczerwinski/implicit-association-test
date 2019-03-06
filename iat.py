@@ -113,9 +113,11 @@ def block(anchors, responseMap, selection, trialName, trials=20):
         timer.reset()
         userAnswer = event.waitKeys(keyList=rightKeys) or []
         choseWisely = helpers.equals(userAnswer, rightAnswer)
+        print(userAnswer)
         if choseWisely:
             RT = timer.getTime()
         elif 'escape' in userAnswer:
+            win.close()
             core.quit()
         else:
             RT = timer.getTime()
@@ -183,7 +185,7 @@ def wrapping(category, buttons, directions, flipA=False, category2=False, flipB=
     blockthing = wrap(annotations, d_keys, category_list, cat_title, trials=ntrials)
     return blockthing
 
-ntrials = 12
+ntrials = 3
 
 allBlocks = {
     1: wrapping(TEST_category, keybindings, directions, False, False, False, ntrials),
@@ -201,7 +203,7 @@ def instrukcja_prosta(kat1, kat2):
 {0}                                                                                           {1}
 UWAGA – spójrz, teraz zmieniły się kategorie. Jeżeli dany bodziec należy do kategorii znajdującej się po lewej stronie , naciśnij klawisz  E. Jeżeli dany bodziec należy do kategorii należącej po prawej stronie naciśnij I. Każde słowo lub obrazek należy do jednej kategorii. Jeżeli popełnisz błąd przy porządkowaniu, na ekranie pojawi się czerwony  X – wtedy popraw błąd, naciskając  drugi klawisz
 Jest to zadanie na czas. Postaraj się wykonać je JAK NAJSZYBCIEJ POTRAFISZ, jednocześnie popełniając jak najmniej błędów. Zbyt wolne wykonanie zadania i popełnienie zbyt wielu błędów prowadzi do wyników, których nie można zinterpretować. Zadanie zajmuje około 5 minut
-ABY ROZPOCZĄĆ TEST WCIŚNIJ SPACJĘ'''.format(kat1, kat2) 
+ABY ROZPOCZĄĆ TEST WCIŚNIJ SPACJĘ'''.format(kat1, kat2)
     return text
 
 def instrukcja_zlozona(a1, a2, b1, b2):
@@ -214,15 +216,15 @@ Jeżeli popełnisz błąd przy porządkowaniu, na ekranie pojawi się czerwony  
 ABY KONTYNUOWAĆ WCIŚNIJ SPACJĘ'''.format(a1, a2, b1, b2, len(a1)*" ")
     return tekst
 
-#mainInstruction = u'''
-#    Połóż palce wskazujące na klawisze 'e' oraz 'i', abyś był gotowy(a), do jak najszybszego udzielania odpowiedzi.
-#    Słowa i obrazki grupuj za pomocą klawisza 'e' lub 'i' zgodnie z nazwami kategorii znajdującymi się u góry ekranu
-#    Każde słowo lub obrazek można zaklasyfikować do jednej kategorii. Większość kategoryzacji nie powinna sprawiać problemu.
-#    Klasyfikuj bodźce zgodnie z ich kategorią. Obrazki oraz zielone słowa należą do kategorii zaznaczonych na zielono. Analogicznie, słowa w kolorze białym powinny być przyporządkowane do białych kategorii.
-#    Jeżeli zadanie wykonujesz zbyt wolno, wówczas program nie generuje wyniku. Proszę, postaraj się wykonywać test najszybciej, jak potrafisz.
-#    Jeśli test wykonujesz szybko, mogą zdarzyć się przypadkowe błędy. Nie stanowi to jednak problemu.
-#    Aby uzyskać lepszy rezultat, unikając zakłóceń podczas wykonywania testu, ustaw, proszę, w monitorze maksymalną jasność.
-#'''
+mainInstruction = u'''
+    Połóż palce wskazujące na klawisze 'e' oraz 'i', abyś był gotowy(a), do jak najszybszego udzielania odpowiedzi.
+    Słowa i obrazki grupuj za pomocą klawisza 'e' lub 'i' zgodnie z nazwami kategorii znajdującymi się u góry ekranu
+    Każde słowo lub obrazek można zaklasyfikować do jednej kategorii. Większość kategoryzacji nie powinna sprawiać problemu.
+    Klasyfikuj bodźce zgodnie z ich kategorią. Obrazki oraz zielone słowa należą do kategorii zaznaczonych na zielono. Analogicznie, słowa w kolorze białym powinny być przyporządkowane do białych kategorii.
+    Jeżeli zadanie wykonujesz zbyt wolno, wówczas program nie generuje wyniku. Proszę, postaraj się wykonywać test najszybciej, jak potrafisz.
+    Jeśli test wykonujesz szybko, mogą zdarzyć się przypadkowe błędy. Nie stanowi to jednak problemu.
+    Aby uzyskać lepszy rezultat, unikając zakłóceń podczas wykonywania testu, ustaw, proszę, w monitorze maksymalną jasność.
+'''
 
 endInstruction = u'''Dziękujemy za badanie
 '''
@@ -234,27 +236,27 @@ Jest to zadanie na czas. Postaraj się wykonać je JAK NAJSZYBCIEJ POTRAFISZ, je
 ABY ROZPOCZĄĆ TEST WCIŚNIJ SPACJĘ
 '''
 
-#instructions = {
-#        1: instrukcja_prawo_lewo,
-#        2: instrukcja_prosta(A[0], A[1]),  
-#        3: instrukcja_prosta(A[1], A[0]),
-#        4: instrukcja_prosta(B[0], B[1]),
-#        5: instrukcja_prosta(B[1], B[0]),
-#        6: instrukcja_zlozona(A[0], A[1], B[0], B[1]), 
-#        7: instrukcja_zlozona(A[0], A[1], B[1], B[0]),
-#        8: instrukcja_zlozona(A[1], A[0], B[0], B[1])
-#    }
-mainInstruction = '/instrukcje/instrukcja_glowna.png'
 instructions = {
-        1: '/instrukcje/lewo_prawo.png',  # powinno byc lewo_prawo.png
-        2: '/instrukcje/pozytywne_negatywne.png',
-        3: '/instrukcje/negatywne_pozytywne.png',  
-        4: '/instrukcje/paraolimpiada_olimpiada.png',
-        5: '/instrukcje/olimpiada_paraolimpiada.png',
-        6: '/instrukcje/paraolmpiada_pozytywne_olimpiada_negatywne.png',
-        7: '/instrukcje/olimpiada_pozytywne_paraolimpiada_negatywne.png', 
-        8: '/instrukcje/paraolimpiada_negatywne_olimpiada_pozytywne.png'
+        1: instrukcja_prawo_lewo,
+        2: instrukcja_prosta(A[0], A[1]),
+        3: instrukcja_prosta(A[1], A[0]),
+        4: instrukcja_prosta(B[0], B[1]),
+        5: instrukcja_prosta(B[1], B[0]),
+        6: instrukcja_zlozona(A[0], A[1], B[0], B[1]),
+        7: instrukcja_zlozona(A[0], A[1], B[1], B[0]),
+        8: instrukcja_zlozona(A[1], A[0], B[0], B[1])
     }
+#mainInstruction = '/instrukcje/instrukcja_glowna.png'
+#instructions = {
+#        1: '/instrukcje/lewo_prawo.png',  # powinno byc lewo_prawo.png
+#        2: '/instrukcje/pozytywne_negatywne.png',
+#        3: '/instrukcje/negatywne_pozytywne.png',
+#        4: '/instrukcje/paraolimpiada_olimpiada.png',
+#        5: '/instrukcje/olimpiada_paraolimpiada.png',
+#        6: '/instrukcje/paraolmpiada_pozytywne_olimpiada_negatywne.png',
+#        7: '/instrukcje/olimpiada_pozytywne_paraolimpiada_negatywne.png',
+#        8: '/instrukcje/paraolimpiada_negatywne_olimpiada_pozytywne.png'
+#    }
 def main():
     # Instruction Setup
     header = ['number of stimulation', 'Content', 'corrAns', 'RT', 'trialName']

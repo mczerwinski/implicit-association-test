@@ -84,7 +84,7 @@ def showInstruction(win, stopkeys=['space'], text=None, image=None, **kwargs):
     by providing a list as keyword argument, e.g.
     stopkeys=['escape', 'space', 'f'].'''
     if text:
-        instruction = visual.TextStim(win, text=text, height=0.06, wrapWidth=1.6,  **kwargs)
+        instruction = visual.TextStim(win, text=text, **kwargs)
     elif image:
         instruction = visual.ImageStim(win, image=image, **kwargs)
     else:
@@ -192,7 +192,7 @@ def runExperiment(pause, instructionOrder, blockOrder):
         elif isImage(instr):
             pause(image=instr)
         else:
-            pause(text=instr, font='Arial', wrapWidth=2.5)
+            pause(text=instr, font='Arial', wrapWidth=1.5, height=0.06)
 
         #current = block(trials=40) if trialCount == 5 else block()
         # for some reason it changed nb of trials to 40 if the nb of the block > 5
