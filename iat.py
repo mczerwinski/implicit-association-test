@@ -162,7 +162,7 @@ def wrapping(category, buttons, directions, flipA=False, category2=False, flipB=
         else:
             c, d = directions[2], directions[3]
             cbutton, dbutton = buttons[0], buttons[1]
-            cat_title += "_"+category2[1]+"_"+category2[0]
+            cat_title += "_"+category2[0]+"_"+category2[1]
 
     d_annot ={}
     d_annot[category[0]] = a
@@ -185,7 +185,7 @@ def wrapping(category, buttons, directions, flipA=False, category2=False, flipB=
     blockthing = wrap(annotations, d_keys, category_list, cat_title, trials=ntrials)
     return blockthing
 
-ntrials = 3
+ntrials = 12
 
 allBlocks = {
     1: wrapping(TEST_category, keybindings, directions, False, False, False, ntrials),
