@@ -179,7 +179,7 @@ def wrapping(category, buttons, directions, flipA=False, category2=False, flipB=
     blockthing = wrap(annotations, d_keys, category_list, cat_title, trials=ntrials)
     return blockthing
 
-ntrials = 3
+ntrials = 12
 
 allBlocks = {
     1: wrapping(TEST_category, keybindings, directions, False, False, False, ntrials),
@@ -256,7 +256,6 @@ instructions = {
 #    }
 def main():
     # Instruction Setup
-    header = ['number of stimulation', 'Content', 'corrAns', 'RT', 'trialName']
 
     show(text=mainInstruction, height=0.06, wrapWidth=1.6, font='Arial')
 
@@ -274,6 +273,8 @@ def main():
         trialType = 1
     order = order1 if trialType else order2
     #order = [2, 6]
+
+    header = ['number of stimulation', 'Content', 'corrAns', 'RT', 'trialName', 'trialType:', str(trialType)]
 
     # order the blocks and instruction according to the trialType
     blockOrder = [allBlocks[num] for num in order]
