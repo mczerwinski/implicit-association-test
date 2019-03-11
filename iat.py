@@ -15,7 +15,7 @@ import numpy as np
 maindir = os.getcwd()
 wyniki = './wyniki'
 
-result_name = "experiment_paraolympics_"
+result_name = "experiment_olympics_"
 
 # this part is to create a new name for the results
 os.chdir(wyniki)
@@ -78,15 +78,12 @@ feedbackTime = 1
 def block(anchors, responseMap, selection, trialName, trials=20):
     data = []
     helpers.autodraw(anchors)
-    #print('test1')
     filteredStim = helpers.filterStimuli(stimuli, 'response', *selection) #this is ok
     extendedStim = helpers.compensate(filteredStim, trials) # this is ok
-    #print('test2')
 
     randomStim = sorted(extendedStim, key=lambda x: random.random())[:trials]
     #preparedStim = helpers.deneigh(randomStim)
     preparedStim = randomStim
-    #print('test3')
     for stimulus in preparedStim:
         helpers.autodraw(anchors, draw=True)
         onTime = True
@@ -113,7 +110,6 @@ def block(anchors, responseMap, selection, trialName, trials=20):
         timer.reset()
         userAnswer = event.waitKeys(keyList=rightKeys) or []
         choseWisely = helpers.equals(userAnswer, rightAnswer)
-        print(userAnswer)
         if choseWisely:
             RT = timer.getTime()
         elif 'escape' in userAnswer:
@@ -132,12 +128,9 @@ def block(anchors, responseMap, selection, trialName, trials=20):
 
             event.waitKeys(keyList=[rightAnswer])
 
-        #data.append([ISI, content, int(onTime), RT, trialName])
         data.append([stimulus['item'], content, int(onTime), RT, trialName])
         draw(fixCross, ISI)
-    print('test5')
     return data
-
 
 def wrap(*args, **kwargs):
     return functools.partial(block, *args, **kwargs)
@@ -163,7 +156,8 @@ def wrapping(category, buttons, directions, flipA=False, category2=False, flipB=
             c, d = directions[2], directions[3]
             cbutton, dbutton = buttons[0], buttons[1]
             cat_title += "_"+category2[0]+"_"+category2[1]
-
+            #INCORRECT BELOW!!
+            #cat_title += "_"+category2[1]+"_"+category2[0]
     d_annot ={}
     d_annot[category[0]] = a
     d_annot[category[1]] = b
@@ -185,7 +179,7 @@ def wrapping(category, buttons, directions, flipA=False, category2=False, flipB=
     blockthing = wrap(annotations, d_keys, category_list, cat_title, trials=ntrials)
     return blockthing
 
-ntrials = 12
+ntrials = 3
 
 allBlocks = {
     1: wrapping(TEST_category, keybindings, directions, False, False, False, ntrials),
@@ -201,6 +195,7 @@ allBlocks = {
 def instrukcja_prosta(kat1, kat2):
     text = u'''
 {0}                                                                                           {1}
+
 UWAGA – spójrz, teraz zmieniły się kategorie. Jeżeli dany bodziec należy do kategorii znajdującej się po lewej stronie , naciśnij klawisz  E. Jeżeli dany bodziec należy do kategorii należącej po prawej stronie naciśnij I. Każde słowo lub obrazek należy do jednej kategorii. Jeżeli popełnisz błąd przy porządkowaniu, na ekranie pojawi się czerwony  X – wtedy popraw błąd, naciskając  drugi klawisz
 Jest to zadanie na czas. Postaraj się wykonać je JAK NAJSZYBCIEJ POTRAFISZ, jednocześnie popełniając jak najmniej błędów. Zbyt wolne wykonanie zadania i popełnienie zbyt wielu błędów prowadzi do wyników, których nie można zinterpretować. Zadanie zajmuje około 5 minut
 ABY ROZPOCZĄĆ TEST WCIŚNIJ SPACJĘ'''.format(kat1, kat2)
@@ -211,6 +206,7 @@ def instrukcja_zlozona(a1, a2, b1, b2):
 {0}                                                                                           {1}
 +                                                                                             {4}+
 {2}                                                                                           {3}
+
 Spójrz na górę ekranu, kategorie, które wyświetlały się poprzednio, teraz znajdują się razem. Pamiętaj, że każdy bodziec należy tylko do jednej grupy. Przyporządkuj wyświetlające się słowa lub zdjęcia do prawych lub lewych grup, przy pomocy klawiszy E (prawa strona) lub I (lewa strona).
 Jeżeli popełnisz błąd przy porządkowaniu, na ekranie pojawi się czerwony  X – wtedy popraw błąd, naciskając  drugi klawisz
 ABY KONTYNUOWAĆ WCIŚNIJ SPACJĘ'''.format(a1, a2, b1, b2, len(a1)*" ")
@@ -230,7 +226,8 @@ endInstruction = u'''Dziękujemy za badanie
 '''
 
 instrukcja_prawo_lewo = u'''
-LEWO                                                                                                                               PRAWO
+LEWO                                                                                           PRAWO
+
 Połóż palce na klawiszach E oraz I. W tym zadaniu sprawdzany jest Twój czas reakcji. Naciśnij "E" - lewy klawisz, jeżeli pojawi się słowo LEWO. Naciśnij "i" - prawy klawisz jeżeli pojawi się słowo PRAWO. Jeżeli popełnisz błąd przy porządkowaniu, na ekranie pojawi się czerwony  X – wtedy popraw błąd, naciskając  drugi klawisz.
 Jest to zadanie na czas. Postaraj się wykonać je JAK NAJSZYBCIEJ POTRAFISZ, jednocześnie popełniając jak najmniej błędów.
 ABY ROZPOCZĄĆ TEST WCIŚNIJ SPACJĘ
@@ -269,7 +266,12 @@ def main():
     order1 = [1, 2, 4, 7, 3, 5, 6, 1]#[1, 2, 5, 6, 7, 4, 3]
     order2 = [1, 3, 5, 7, 2, 4, 8, 1]#[1, 3, 4, 7, 6, 5, 2]
 
-    trialType = random.randint(0, 1) #1
+    trial_random = random.random()
+    #trialType = random.randint(0, 1) #1
+    if trial_random<0.6666:
+        trialType = 0
+    else:
+        trialType = 1
     order = order1 if trialType else order2
     #order = [2, 6]
 
@@ -291,5 +293,6 @@ def main():
     win.close()
     core.quit()
     os.chdir(maindir)
+
 main()
 os.chdir(maindir)
