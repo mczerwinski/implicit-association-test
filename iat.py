@@ -190,6 +190,7 @@ allBlocks = {
     6: wrapping(A, keybindings, directions, False, B, False, ntrials),
     7: wrapping(A, keybindings, directions, False, B, True, ntrials),
     8: wrapping(A, keybindings, directions, True, B, False, ntrials),
+    9: wrapping(A, keybindings, directions, True, B, True, ntrials)
     }
 
 def instrukcja_prosta(kat1, kat2):
@@ -241,7 +242,9 @@ instructions = {
         5: instrukcja_prosta(B[1], B[0]),
         6: instrukcja_zlozona(A[0], A[1], B[0], B[1]),
         7: instrukcja_zlozona(A[0], A[1], B[1], B[0]),
-        8: instrukcja_zlozona(A[1], A[0], B[0], B[1])
+        8: instrukcja_zlozona(A[1], A[0], B[0], B[1]),
+        9: instrukcja_zlozona(A[1], A[0], B[1], B[0])
+
     }
 #mainInstruction = '/instrukcje/instrukcja_glowna.png'
 #instructions = {
@@ -262,23 +265,30 @@ def main():
     # order in which the data are analyzed
 
     # this can be made to randomly choose between two (or more) order types
-    order1 = [1, 2, 4, 7, 3, 5, 6, 1]#[1, 2, 5, 6, 7, 4, 3]
-    order2 = [1, 3, 5, 7, 2, 4, 8, 1]#[1, 3, 4, 7, 6, 5, 2]
+    order1 = [1, 2, 4, 7, 3, 5, 6, 1]
+    order0 = [1, 3, 4, 9, 2, 5, 8, 1]
+
 
     trial_random = random.random()
-    #trialType = random.randint(0, 1) #1
-    if trial_random<0.6666:
+    trialType = random.randint(0, 1) #1
+    if trial_random<0.5:
         trialType = 0
     else:
         trialType = 1
-    order = order1 if trialType else order2
-    #order = [2, 6]
+
+    #TrialType set HARD on group 0:
+    #trialType=0
+
+    if trialType==0:
+        order = order0
+    elif trialType==1:
+        order = order1
 
     header = ['number of stimulation', 'Content', 'corrAns', 'RT', 'trialName', 'trialType:', str(trialType)]
 
     # order the blocks and instruction according to the trialType
     blockOrder = [allBlocks[num] for num in order]
-    instructionOrder = [instructions[num] for num in order] # maybe instructions can be text, not images? it probably is implemented
+    instructionOrder = [instructions[num] for num in order]
     data = helpers.runExperiment(show, instructionOrder, blockOrder)
 
     ## Save Data to CSV
