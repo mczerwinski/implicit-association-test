@@ -179,7 +179,7 @@ def wrapping(category, buttons, directions, flipA=False, category2=False, flipB=
     blockthing = wrap(annotations, d_keys, category_list, cat_title, trials=ntrials)
     return blockthing
 
-ntrials = 12
+ntrials = 20
 
 allBlocks = {
     1: wrapping(TEST_category, keybindings, directions, False, False, False, ntrials),
@@ -265,9 +265,8 @@ def main():
     # order in which the data are analyzed
 
     # this can be made to randomly choose between two (or more) order types
-    order1 = [1, 2, 4, 7, 3, 5, 6, 1]
-    order0 = [1, 3, 4, 9, 2, 5, 8, 1]
-
+    order0 = [1, 3, 5, 9, 2, 7, 1]
+    order1 = [1, 3, 4, 8, 2, 6, 1]
 
     trial_random = random.random()
     trialType = random.randint(0, 1) #1
